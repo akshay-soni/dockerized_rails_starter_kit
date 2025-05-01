@@ -1,6 +1,6 @@
 # Rails + Hotwire + Docker Starter Kit
 
-This is a minimal yet production-ready Rails 7 starter kit, fully Dockerized for local development with Postgres, Redis, and Sidekiq. It's optimized for modern Rails development using Hotwire (Turbo + Stimulus), TailwindCSS, and Sidekiq background jobs. Perfect for building SaaS-style apps.
+This is a minimal yet production-ready Rails 7 starter kit, fully Dockerized for local development with Postgres, Redis, and Sidekiq. It's optimized for modern Rails development using Hotwire (Turbo + Stimulus), TailwindCSS, and Sidekiq background jobs. Perfect for building Rails apps.
 
 ---
 
@@ -22,7 +22,7 @@ This is a minimal yet production-ready Rails 7 starter kit, fully Dockerized for
 ### 1. Clone the Repo
 
 ```bash
-git clone <this-repo-url>
+git clone https://github.com/akshay-soni/dockerized_rails_starter_kit.git
 cd your-app-folder
 ```
 
@@ -32,7 +32,7 @@ cd your-app-folder
 docker-compose build
 ```
 
-If you're on Apple Silicon (M1/M2), run this once:
+If you're on Apple Silicon, run this once:
 
 ```bash
 docker-compose run --rm web bundle lock --add-platform aarch64-linux
@@ -78,17 +78,45 @@ Visit: [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## 🔥 Optional Features to Enable
+## 🔥 Optional Feature Installs
 
-### Install Hotwire (Turbo + Stimulus)
-```bash
-docker-compose run web rails hotwire:install
-```
+### 🔹 Install Hotwire (Turbo + Stimulus)
 
-### Install TailwindCSS
-```bash
-docker-compose run web rails tailwindcss:install
-```
+1. Add to your Gemfile:
+   ```ruby
+   gem 'hotwire-rails'
+   ```
+2. Install the gem:
+   ```bash
+   docker-compose run --rm web bundle install
+   ```
+3. Install Hotwire:
+   ```bash
+   docker-compose run --rm web rails hotwire:install
+   ```
+
+---
+
+### 🔹 Install TailwindCSS
+
+1. Add to your Gemfile:
+   ```ruby
+   gem 'tailwindcss-rails'
+   ```
+2. Install the gem:
+   ```bash
+   docker-compose run --rm web bundle install
+   ```
+3. Install TailwindCSS:
+   ```bash
+   docker-compose run --rm web rails tailwindcss:install
+   ```
+4. Optional: add this to any view to verify:
+   ```erb
+   <div class="p-6 bg-indigo-100 text-indigo-800 font-bold rounded-xl shadow">
+     TailwindCSS is working! 🎉
+   </div>
+   ```
 
 ---
 
@@ -110,6 +138,23 @@ docker-compose run web rails db:migrate
 # Run Sidekiq manually
 docker-compose run web bundle exec sidekiq
 ```
+
+---
+
+## 🧰 How to Add a New Gem (Recommended Process)
+
+1. Add gem to `Gemfile`.
+2. Run `bundle install` inside Docker:
+   ```bash
+   docker-compose run --rm web bundle install
+   ```
+3. Rebuild the container:
+   ```bash
+   docker-compose build
+   ```
+4. Done! You can now use the gem inside your app.
+
+> 💡 Tip: Always rebuild after changing the Gemfile or Dockerfile.
 
 ---
 
@@ -137,7 +182,7 @@ mount Sidekiq::Web => '/sidekiq'
 
 ## ✨ Author
 
-Maintained by @Akshay-Soni. Built for fast and repeatable Rails app creation.
+Maintained by Akshay Soni. Built for fast and repeatable Rails app creation.
 
 ---
 
